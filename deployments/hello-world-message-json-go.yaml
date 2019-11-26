@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-message-json-go
+  labels:
+    app: hello-world-message-json-go
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-world-message-json-go
+  template:
+    metadata:
+      labels:
+        app: hello-world-message-json-go
+    spec:
+      containers:
+      - name: hello-world-message-json-go
+
+        image: bogdangi/hello-world-message-json-go:0.0.2
+
+        ports:
+        - containerPort: 3000
+          name: http
+          protocol: TCP
+
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reverse-message-json-go
+  labels:
+    app: reverse-message-json-go
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: reverse-message-json-go
+  template:
+    metadata:
+      labels:
+        app: reverse-message-json-go
+    spec:
+      containers:
+      - name: reverse-message-json-go
+
+        image: bogdangi/reverse-message-json-go:0.0.2
+
+        env:
+        - name: MESSAGE_SERVICE_URL
+          value: "http://hello-world-message-json-go/"
+
+        ports:
+        - containerPort: 3000
+          name: http
+          protocol: TCP
+
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: reverse-message-json-go
+  labels:
+    app: reverse-message-json-go
+spec:
+  ports:
+  - port: 80
+    targetPort: http
+    name: http
+    protocol: TCP
+  type: NodePort
+  selector:
+    app: reverse-message-json-go

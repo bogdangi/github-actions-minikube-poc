@@ -13,4 +13,9 @@ jobs:
       run: eval ${{ steps.minikube.outputs.launcher }}
     - name: Check pods
       run: |
-        kubectl get pods
+        kubectl apply -f deployments/
+        kubectl apply -f services/
+        kubectl wait --for=condition=available --timeout=30s deployment/hello-world-message-json-go
+        kubectl wait --for=condition=available --timeout=30s deployment/reverse-message-json-go
+        curl $(minikube service hello-world-message-json-go --url)
+        curl $(minikube service reverse-message-json-go --url)

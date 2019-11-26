@@ -6,12 +6,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+
     - name: Setup Minikube
       id: minikube
       uses: CodingNagger/minikube-setup-action@v1.0.2
+
     - name: Launch Minikube
       run: eval ${{ steps.minikube.outputs.launcher }}
-    - name: Check pods
+
+    - name: Check Result
       run: |
         kubectl apply -f deployments/
         kubectl apply -f services/
